@@ -13,7 +13,7 @@ The application is based on a simple Express server and a React+ViteJS fontend, 
 ```bash
 $ docker compose up # start database
 
-$ nvm install # install dependencies
+$ npm install # install dependencies
 
 $ npm run server dev # run backend (nodemon)
 
