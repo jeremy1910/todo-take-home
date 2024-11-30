@@ -1,10 +1,14 @@
-# Full Stack React + Express
+<p align="center">
+  <h3 align="center"><i>TODO</i> - a take-home exercise</h3>
+</p>
+<br />
+<br />
 
-This is take-home exercise contains a full stack web application!
+This is take-home exercise contains a full stack web application !
 
 The application is based on a simple Express server and a React+ViteJS fontend, each being served on a different port.
 
-## Quickstart
+# Quickstart
 
 ```bash
 $ docker compose up # start database
@@ -18,9 +22,9 @@ $ npm run client dev # run frontend (vite hmr) in a separate terminal
 
 Read assignment in the [**Questions** section below](#questions).
 
-## Usage
+# Usage
 
-### NodeJS & nvm config
+## NodeJS & nvm config
 
 In order to locally run any of the packages, you will need to have NodeJS installed on your machine. Node is responsible for installing, resolving and bundling dependencies, aswell as running the development servers and the tests suites. Consequently, the version of node used for all of this has to be consistent among each dependency pool.
 
@@ -50,7 +54,7 @@ nvm alias default $(cat .nvmrc)
 
 ... and restart your machine for the change to take effect globally. (If you don't some non-interactive terminal session might not pick the default version).
 
-### Docker setup
+## Docker setup
 
 For the express server to run, you will need it to connect to a database.
 
@@ -58,7 +62,7 @@ For you to deploy such a thing locally, we recommend using [Docker Compose](http
 
 Once you are all set up, simply run `docker compose up` inside the root directory. This should launch a simple postgresql database using the `compose.yml` file.
 
-### Start the server and the client
+## Start the server and the client
 
 To start the Express server, use the following script :
 
@@ -72,13 +76,13 @@ To start the Vite server (frontend), use the following script :
 $ npm run client dev
 ```
 
-## Questions
+# Questions
 
-### Part 1
+## Part 1
 
 The functionality to add todos and mark them as completed or uncompleted exists. Implement the ability to update the “description” field of a given todo in the database.
 
-### Part 2
+## Part 2
 
 Implement optimistic updates for updating the “completed” and “description” fields for a given todo. When a user creates a todo, toggles a todo completeness, or updates a todo description, those updates should be made immediately in the frontend of the application, before the updates are saved in the database. If the API responds with a success status, then the frontend updates are allowed to persist. If the API responds with an error status, the frontend update must be reverted.
 
