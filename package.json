@@ -1,0 +1,13 @@
+{
+  "name": "@todo-take-home/monorepo",
+  "private": true,
+  "version": "0.0.0",
+  "workspaces": [
+    "packages/client",
+    "packages/server"
+  ],
+  "scripts": {
+    "client": "npm run --workspace=@todo-take-home/client",
+    "server": "npm run --workspace=@todo-take-home/server"
+  }
+}
