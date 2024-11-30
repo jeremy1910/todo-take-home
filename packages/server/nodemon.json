@@ -2,5 +2,5 @@
   "watch": ["src"],
   "ext": "ts",
   "signal": "SIGTERM",
-  "exec": "ts-node --swc src/main.ts"
+  "exec": "NODE_ENV=development ts-node --swc src/main.ts"
 }
