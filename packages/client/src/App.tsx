@@ -8,6 +8,7 @@ import { Header } from "./components/Header";
 import "./App.css";
 
 import * as API from "./api";
+import { Todo } from "./types";
 
 const Wrapper = styled.div({
   display: "flex",

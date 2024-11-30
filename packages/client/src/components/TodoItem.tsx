@@ -1,5 +1,6 @@
-import React, { FC } from "react";
+import React, { FC, useCallback } from "react";
 import styled from "@emotion/styled";
+import { Todo } from "../types";
 
 export const Wrapper = styled.label({
   display: "flex",
@@ -39,11 +40,15 @@ export interface TodoItemProps {
 export const TodoItem: FC<TodoItemProps> = ({ todo, toggle }) => {
   const { id, completed, description } = todo;
 
-  const handleToggle = (e) => {
-    console.log(todo);
-    console.log("hi there", e.target.checked, id);
-    toggle(id, !!e.target.checked);
-  };
+  const handleToggle = useCallback<React.ChangeEventHandler<HTMLInputElement>>(
+    (e) => {
+      console.log(todo);
+      console.log("hi there", e.target.checked, id);
+      toggle && toggle(id, !!e.target.checked);
+    },
+    [todo, id]
+  );
+
   return (
     <Wrapper>
       <Checkbox
