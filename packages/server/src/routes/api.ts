@@ -18,7 +18,7 @@ router.post("/todos", async (req, res) => {
     const { description } = req.body;
     const newTodo = Todo.build({ description });
     await newTodo.save();
-    res.sendStatus(201);
+    res.status(201).json(newTodo);
   } catch (error) {
     res.status(500).send((error as Error).message);
   }

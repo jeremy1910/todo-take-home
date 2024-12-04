@@ -16,7 +16,7 @@ export async function addTodo(description: string) {
     body: JSON.stringify({ description }),
   });
   if (resp.ok) {
-    return true;
+    return resp.json();
   }
 
   throw new Error("Unable to add todo");
@@ -35,22 +35,28 @@ export async function deleteTodo(id: number) {
 }
 
 export async function toggleTodo(id: number, isCompleted: boolean) {
-  // Implement me!
-  const resp = await fetch(`${import.meta.env.VITE_SERVER_URL}/todos/${id}`, {
+  const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/todos/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ completed: isCompleted }),
   });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
 }
 
-export async function editDescriptionTodo(id: number, description: boolean) {
-  return fetch(`${import.meta.env.VITE_SERVER_URL}/todos/${id}`, {
+export async function editDescriptionTodo(id: number, description: string) {
+  const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/todos/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ description }),
   });
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
 }

@@ -29,19 +29,52 @@ function App() {
   }, []);
 
   const addTodo = useCallback(async (description: string) => {
-    await API.addTodo(description);
-    API.getTodos().then(setTodos);
+    const tempTodo = {
+      id: Date.now(),
+      description,
+      completed: false,
+    };
+
+    setTodos((prev) => [...prev, tempTodo]);
+
+    try {
+      const newTodo = await API.addTodo(description);
+      console.log('newTodo', newTodo)
+      setTodos((prev) =>
+        prev.map((todo) => (todo.id === tempTodo.id ? newTodo : todo))
+      );
+    } catch (err) {
+      console.error("Failed to add todo", err);
+      setTodos((prev) => prev.filter((todo) => todo.id !== tempTodo.id));
+    }
   }, []);
 
   const handleChange = useCallback(async (id: number, isCompleted: boolean) => {
-    await API.toggleTodo(id, isCompleted);
-    API.getTodos().then(setTodos);
-  }, []);
+    const previousTodos = [...todos];
+    setTodos((prev) =>
+      prev.map((todo) => (todo.id === id ? { ...todo, completed: isCompleted } : todo))
+    );
 
-  const handleEditdescription = async (id: number, description: boolean) => {
-    await API.editDescriptionTodo(id, description);
-    API.getTodos().then(setTodos);
-  }
+    try {
+      await API.toggleTodo(id, isCompleted);
+    } catch (err) {
+      console.error("Failed to update todo status", err);
+      setTodos(previousTodos);
+    }
+  }, [todos]);
+
+
+  const handleEditdescription = useCallback(async (id: number, description: string) => {
+    const previousTodos = [...todos];
+    setTodos((prev) => prev.map((todo) => (todo.id === id ? { ...todo, description } : todo)));
+
+    try {
+      await API.editDescriptionTodo(id, description);
+    } catch (err) {
+      console.error("Failed to update description", err);
+      setTodos(previousTodos);
+    }
+  }, [todos]);
 
   return (
     <Wrapper>
