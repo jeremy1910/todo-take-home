@@ -28,7 +28,7 @@ function App() {
     }
   }, []);
 
-  const addTodo = useCallback(async (description: string) => {
+  const addTodo = async (description: string) => {
     const tempTodo = {
       id: Date.now(),
       description,
@@ -47,7 +47,7 @@ function App() {
       console.error("Failed to add todo", err);
       setTodos((prev) => prev.filter((todo) => todo.id !== tempTodo.id));
     }
-  }, []);
+  };
 
   const handleChange = useCallback(async (id: number, isCompleted: boolean) => {
     const previousTodos = [...todos];
