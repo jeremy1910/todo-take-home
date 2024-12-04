@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { Todo } from "../models/Todo";
+import { ITodoProperties, Todo } from "../models/Todo";
 
 const router = Router();
 
@@ -40,14 +40,22 @@ router.delete("/todos/:id", async (req, res) => {
 router.patch("/todos/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { completed } = req.body;
     const todo = await Todo.findByPk(id);
 
     if (!todo) {
       throw new Error("Could not find the todo to update");
     }
 
-    await todo.update({ completed });
+    const allowedUpdates: Array<keyof ITodoProperties> = ["completed", "description"];
+    const updates: Partial<Record<keyof ITodoProperties, any>> = {};
+
+    for (const key of allowedUpdates) {
+      if (req.body[key] !== undefined) {
+        updates[key] = req.body[key];
+      }
+    }
+
+    await todo.update(updates);
     res.sendStatus(201);
   } catch (error) {
     res.status(500).send((error as Error).message);

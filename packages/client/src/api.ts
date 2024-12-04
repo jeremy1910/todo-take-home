@@ -44,3 +44,13 @@ export async function toggleTodo(id: number, isCompleted: boolean) {
     body: JSON.stringify({ completed: isCompleted }),
   });
 }
+
+export async function editDescriptionTodo(id: number, description: boolean) {
+  return fetch(`${import.meta.env.VITE_SERVER_URL}/todos/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ description }),
+  });
+}

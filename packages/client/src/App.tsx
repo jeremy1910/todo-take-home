@@ -38,13 +38,18 @@ function App() {
     API.getTodos().then(setTodos);
   }, []);
 
+  const handleEditdescription = async (id: number, description: boolean) => {
+    await API.editDescriptionTodo(id, description);
+    API.getTodos().then(setTodos);
+  }
+
   return (
     <Wrapper>
       <Header>Todo List</Header>
       <AddInput onAdd={addTodo} />
       <TodoList>
         {todos.map((todo) => (
-          <TodoItem todo={todo} toggle={handleChange} />
+          <TodoItem todo={todo} toggle={handleChange} handleEditdescription={handleEditdescription} />
         ))}
       </TodoList>
     </Wrapper>

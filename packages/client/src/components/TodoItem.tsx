@@ -1,6 +1,7 @@
 import React, { FC, useCallback } from "react";
 import styled from "@emotion/styled";
 import { Todo } from "../types";
+import { TodoEditForm } from "./TodoEditForm";
 
 export const Wrapper = styled.label({
   display: "flex",
@@ -35,9 +36,10 @@ const Checkbox = styled.input({
 export interface TodoItemProps {
   todo: Todo;
   toggle?: (id: number, isCompleted: boolean) => void;
+  handleEditdescription: any;
 }
 
-export const TodoItem: FC<TodoItemProps> = ({ todo, toggle }) => {
+export const TodoItem: FC<TodoItemProps> = ({ todo, toggle, handleEditdescription }) => {
   const { id, completed, description } = todo;
 
   const handleToggle = useCallback<React.ChangeEventHandler<HTMLInputElement>>(
@@ -49,6 +51,9 @@ export const TodoItem: FC<TodoItemProps> = ({ todo, toggle }) => {
     [todo, id]
   );
 
+  const handleSaveDescription = (newDescription: string) => handleEditdescription(id, newDescription);
+
+
   return (
     <Wrapper>
       <Checkbox
@@ -58,6 +63,9 @@ export const TodoItem: FC<TodoItemProps> = ({ todo, toggle }) => {
         onChange={handleToggle}
       />
       <Label checked={completed}>{description}</Label>
+      <TodoEditForm
+        onSave={handleSaveDescription}
+      />
     </Wrapper>
   );
 };
