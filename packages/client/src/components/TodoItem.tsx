@@ -1,9 +1,9 @@
-import React, { FC, useCallback } from "react";
+import React, { FC, useCallback, useState } from "react";
 import styled from "@emotion/styled";
 import { Todo } from "../types";
 import { TodoEditForm } from "./TodoEditForm";
 
-export const Wrapper = styled.label({
+export const Wrapper = styled.div({
   display: "flex",
   alignItems: "center",
   width: "100%",
@@ -42,6 +42,8 @@ export interface TodoItemProps {
 export const TodoItem: FC<TodoItemProps> = ({ todo, toggle, handleEditdescription }) => {
   const { id, completed, description } = todo;
 
+  const [isEditing, setIsEditing] = useState(false);
+
   const handleToggle = useCallback<React.ChangeEventHandler<HTMLInputElement>>(
     (e) => {
       console.log(todo);
@@ -51,8 +53,15 @@ export const TodoItem: FC<TodoItemProps> = ({ todo, toggle, handleEditdescriptio
     [todo, id]
   );
 
-  const handleSaveDescription = (newDescription: string) => handleEditdescription(id, newDescription);
+  const handleSaveDescription = (newDescription: string) => {
+    handleEditdescription(id, newDescription);
+    setIsEditing(false);
+  }
 
+  const handleClickLabel = (e: React.MouseEvent<HTMLInputElement>) => {
+    e.stopPropagation();
+    setIsEditing(true)
+  }
 
   return (
     <Wrapper>
@@ -62,10 +71,17 @@ export const TodoItem: FC<TodoItemProps> = ({ todo, toggle, handleEditdescriptio
         checked={completed}
         onChange={handleToggle}
       />
-      <Label checked={completed}>{description}</Label>
-      <TodoEditForm
-        onSave={handleSaveDescription}
-      />
-    </Wrapper>
+
+      {isEditing ?
+        <TodoEditForm
+          onSave={handleSaveDescription}
+          description={description}
+
+        />
+        :
+        <Label onClick={handleClickLabel} checked={completed}>{description}</Label>
+      }
+
+    </Wrapper >
   );
 };

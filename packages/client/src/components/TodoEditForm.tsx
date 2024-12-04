@@ -2,10 +2,11 @@ import React, { FC, useState } from "react";
 
 export interface TodoEditFormProps {
   onSave: (newDescription: string) => void;
+  description: string;
 }
 
-export const TodoEditForm: FC<TodoEditFormProps> = ({ onSave }) => {
-  const [newDescription, setNewDescription] = useState('');
+export const TodoEditForm: FC<TodoEditFormProps> = ({ onSave, description }) => {
+  const [newDescription, setNewDescription] = useState(description);
 
   const handleEditDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewDescription(e.target.value);
